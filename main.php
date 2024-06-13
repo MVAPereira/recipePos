@@ -9,102 +9,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calorie Counter</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
 <style>
     html, body {
             height: 100%;
             margin: 0;
+            font-family: 'Aleo', sans-serif;
     }
     body {
         display: flex;
         flex-direction: column;
-        /* background-image:  url( 'bg.svg' ); */
+        background-image:  url( 'bg.svg' ); */
     }
-    
+
+    .pink{
+        background: #D2ADDE;
+    }
+
+    .orange{
+        background: #D64D27;
+        color: white;
+    }
+    .orange:hover{
+        border: 1px solid #D64D27;
+        color: #D64D27;
+    }
+
+    .table-rounded {
+    border-radius: 10px; 
+    overflow: hidden;*
+    }   
+
 </style>
 </body>
     <div class="container vh-100 d-flex justify-content-center align-items-center">
-        <form method="post">
-            <label for="exampleInputPassword1" class="form-label">Recipe</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" name="recipe">
-            <button type="submit" class="btn btn-primary" name="btn-generate" >Generate</button> 
-        </form>
         
-        <div class="mx-auto m-2 p-4 border border-2 rounded bg-light shadow-lg">
-            <form method="post">
-                <div class="mb-3 d-flex justify-content-center align-items-center">
-                    <div><?php if(isset($carbTotal)){echo $carbTotal . ' carb';}?></div>       
+        <div class="container text-center pink p-4 rounded">
+            <div class="row">
+                <div class="col">
+                    <div class="mx-auto m-2 p-4 border border-2 rounded bg-light">
+                        <form method="post">
+                            <div class="mb-3">
+                                <input type="text" class="form-control mb-1" id="exampleInputPassword1" name="quantity" placeholder="Quantity">
+                                <input type="text" class="form-control mb-1" id="exampleInputPassword1" name="food" placeholder="Food">
+                                <div class="d-flex text-center">
+                                    <input type="text" class="form-control me-1" id="exampleInputPassword1" name="carb" placeholder="Carb">
+                                    <input type="text" class="form-control me-1" id="exampleInputPassword1" name="protein" placeholder="Protein">
+                                    <input type="text" class="form-control" id="exampleInputPassword1" name="fat" placeholder="Fat">
+                                </div>
+                            </div>                                
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn orange" name="btn-submit">Submit</button>
+                                <button type="submit" class="btn orange" name="btn-delete">Restart</button>
+                            </div>
+                        </form>     
+                    </div>
                 </div>
-
-                <div class="mb-3 d-flex justify-content-center align-items-center">
-                    <div><?php if(isset($proteinTotal)){echo $proteinTotal. ' protein';}?></div>       
+                <div class="col">
+                    <div class="container m-2 d-flex align-items-start" style="overflow-y: auto; height: 31.5vh;">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Food</th>
+                                    <th scope="col">Carb</th>
+                                    <th scope="col">Protein</th>
+                                    <th scope="col">Fat</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php  
+                                foreach ($_SESSION['my_array']  as $x) {
+                                    if(isset($x[2])){
+                                        echo '
+                                        <tr>
+                                            <td>'.$x[0].'</td>
+                                            <td>'.$x[1].'</td>
+                                            <td>'.$x[2].'g</td>
+                                            <td>'.$x[3].'g</td>
+                                            <td>'.$x[4].'g</td>
+                                            <td>'.($x[2]*4) + ($x[3]*4) + ($x[4]*9).' kcal</td>
+                                        </tr>
+                                    ';
+                                    }
+                                }
+                                
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-                <div class="mb-3 d-flex justify-content-center align-items-center">
-                    <div><?php if(isset($fatTotal)){echo $fatTotal. ' fat';}?></div>       
-                </div>
-
-                <div class="mb-3 d-flex justify-content-center align-items-center">
-                    <div><?php if(isset($calories)){echo $calories. ' calories';}?></div>       
-                </div>
-
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Quantity</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1" name="quantity">
-
-                    <label for="exampleInputPassword1" class="form-label">Food</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1" name="food">
-
-                    <label for="exampleInputPassword1" class="form-label">Carb</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1" name="carb">
-
-                    <label for="exampleInputPassword1" class="form-label">Protein</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1" name="protein">
-
-                    <label for="exampleInputPassword1" class="form-label">Fat</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1" name="fat">
-                </div>
-
-                <button type="submit" class="btn btn-primary" name="btn-submit" >Submit</button>
-                <button type="submit" class="btn btn-primary" name="btn-delete" >Restart</button>
-                               
-            </form>     
-        </div>
-        <div class="container m-2 d-flex align-items-start">
-
-            <table class="table table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Quantaty</th>
-                        <th scope="col">Food</th>
-                        <th scope="col">Carb</th>
-                        <th scope="col">Protein</th>
-                        <th scope="col">Fat</th>
-                        <th scope="col">Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php  
-                    foreach ($_SESSION['my_array']  as $x) {
-                        if(isset($x[2])){
-                            echo '
-                            <tr>
-                                <td>'.$x[0].'</td>
-                                <td>'.$x[1].'</td>
-                                <td>'.$x[2].'</td>
-                                <td>'.$x[3].'</td>
-                                <td>'.$x[4].'</td>
-                                <td>'.($x[2]*4) + ($x[3]*4) + ($x[4]*9).'</td>
-                            </tr>
-                        ';
-                        }
-                    }
-                       
-                    ?>
-                </tbody>
-            </table>
-
+            </div>
+            <div class="row mb-2"> 
+                <form method="post">
+                    <div class="d-flex">
+                        <input type="text" class="form-control me-1" id="exampleInputPassword1" name="recipe" placeholder="Recipe tittle">
+                        <button type="submit" class="btn orange" name="btn-generate" >Generate</button> 
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </html>
