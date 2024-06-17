@@ -1,5 +1,6 @@
 <?php 
 
+include 'connect.php';
 session_start(); 
 
 if (!isset($_SESSION['my_array'])) {
@@ -13,8 +14,17 @@ if(isset($_POST['btn-submit'])){
     $carb = $_POST['carb'];
     $protein = $_POST['protein'];
     $fat = $_POST['fat'];
-
     $calories = ($carb*4) + ($protein*4) + ($fat*9);
+
+
+    $sql="insert into `foodtable` (quantity, foodName, carb, protein, fat, kcal)
+    values ('$quantity', '$food', '$carb', '$protein', '$fat', '$calories')";
+
+    $result=mysqli_query($con,$sql);
+
+    if(!$result){
+        die(mysqli_error($con));
+    }
 
     array_push($_SESSION['my_array'], [$quantity, $food, $carb, $protein, $fat]);
 }
